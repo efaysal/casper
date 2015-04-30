@@ -34,7 +34,7 @@ Blockchain-based consensus algorithms choose between forks of changes to the con
 
 Casper the Friendly Ghost is a security-deposit based consensus protocol that incentivizes \emph{bonded validators} to coordinate the consensus. It is a generalization of GHOST, a protocol that chooses trees rather than chains of blocks. Therefore, we will introduce a partition of the consensus state into the consensus manager and the application state, so that we can fit tree-based algorithms as blockchain-based protocols.
 
-\subsection{Security-deposit-based consensus protocols}
+\subsection{Security-deposit based consensus protocols}
 
 Economic consensus protocols work by making byzantine faults expensive. The security-deposit approach to economic consensus uses security deposits (also known as ``surety-bonds'', or simply as ``bonds'') to make faults expensive. Nodes who wish to maintain the consensus by proposing and approving updates to the consensus must first place a security deposit under the protocol's control. When nodes are found to be byzantine, or even possibly when they are performing poorly according to metrics measured in the consensus, they will lose all or some of their security deposit. The surety-bond approach makes it easy for the protocol's engineer to specify when and how much nodes who maintain the consensus, (\emph{validator nodes}), should be punished.
 
@@ -44,7 +44,7 @@ Notable examples of surety-bond-based consensus protocols are Tendermint\cite{TM
 
 The Ghost protocol for proof-of-work consensus\cite{GHOST} is an important innovation for blockchain-based consensus protocols even outside the scope of proof-of-work. It has the potential both to dramatically accelerate the rate of block creation, and makes the by-block state transition function aware of, and even participate in the consensus process. The ``heaviest-observed sub-tree'' rule is an instance of a generalized kind of fork-choice rule; one that allows the consensus to execute transactions from blocks that were created in parallel and hence are not chained together in sequence, but rather in a tree; this is done by allowing blocks to have multiple parents and for the state to be a function of a tree containing those blocks in different branches. It is possible to represent all sub-tree choice rules as a fork-choice rule. However, to do this we must make a subtle but important modification to our formalization of blockchain-based consensus protocols.
 
-\subsection{Consensus Manager}
+\subsection{Consensus manager}
 
 The by-block state transition function $\Gamma$ is typically taken to directly upate the consensus state. We insist instead that the state has two parts: a \emph{consensus manager} and a \emph{consensus state}. The consensus manager is responsible for executing and possibly reverting transactions against the consensus state, which we will also refer to as the application state. This represents an important change to our definition of consensus protocols because it makes it possible for us to consider consensus to be only a function of the order of transactions executed (or reverted) against the application state, rather than to be solely determined by the fork-choice rule's choice. Even though a blockchain uniquely determines an application state, there may be many blockchains that give a particular application state. This additional ``wiggle room'' makes it possible for us to consider Ghost to be a blockchain-based consensus protocol which keeps track of a tree of blocks in its consensus manager - and it also lets us see that it is possible for clients who never choose the same fork to nonetheless have consensus on the same application state. The primary purpose of this definition, though, is to separate the application state from the part of the consensus state that deals with managing the consensus process.
 
@@ -54,6 +54,9 @@ Blockchain-based consensus is a process of trial-and-error, where commitments to
 
 In accordance with the definition of blockchain-based consensus protocols given in the reformalization document\cite{ReformalizingConsensus}, we will specify Casper as a triple: a by-block state transition function, a consensus strategy, and a fork-choice rule. 
 
+
+
+%Here we need to change the fee distribution and ghost depth to be only until finality
 \subsection{By-block state transition function}
 
 The by-block state transition function $\Gamma$ governs how the blocks update the consensus state. In our current slightly modified formalization, $\Gamma$ consists of the consensus mechanism and the application state. We will treat only the consensus mechanism, so that anyone can imagine that Casper is serving the particular use case they are interested in. We will additionally insist that the consensus mechanism recieves and manages all transaction fees, manages the set of validators, and includes anything in the consensus that aims to secure or modify the application state independent of the application's specification. 
