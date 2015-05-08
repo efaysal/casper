@@ -30,9 +30,9 @@ This work is an adaptation of the Greedy Heaviest-Observed Sub-Tree\cite{GHOST} 
 
 \section{Introduction}
 
-Blockchain-based consensus algorithms choose between forks of changes to the consensus state, rather than irreversibly commiting changes to the consensus, as traditional consensus algorithms aim to do. This is in order to be available, instead of consistent, in the event of network partitions; but to nonetheless come to consensus after the partitions end and the network reconnects \cite{ReformalizingConsensus}. We will specify an economic blockchain-based consensus protocol, which we see is also a non-economic consensus protocol. 
+Blockchain-based consensus algorithms choose between forks of changes to the consensus state, rather than irreversibly commiting changes to the consensus, as traditional consensus algorithms aim to do. This can be used to create distributed consensus protocols that make their applications available in the event of network partitions; but which nonetheless come to consensus after the network reconnects \cite{ReformalizingConsensus}. We will specify an economic blockchain-based consensus protocol, and later will see that it is also a non-economic consensus protocol.
 
-Casper the Friendly Ghost is a security-deposit based consensus protocol that incentivizes \emph{bonded validators} to coordinate the consensus. It is a generalization of GHOST, a protocol that chooses trees rather than chains of blocks. Therefore, we will introduce a partition of the consensus state into the consensus manager and the application state, so that we can fit tree-based algorithms as blockchain-based protocols.
+Before we specify Casper, we will do an overview of security-deposit based consensus protocols, and GHOST; a ``proof-of-work'' consensus protocol that has a subtree choice rule rather than a fork choice. Finally, we will introduce a partition of the consensus state into the ``consensus manager'' and the ``application state''. This separation of responsibilities allow us to create a blockchain-based consensus protocol that is equivalent to any blocktree-based consensus protocol.
 
 \subsection{Security-deposit based consensus protocols}
 
