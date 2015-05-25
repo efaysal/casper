@@ -1,3 +1,4 @@
-#  Major changes are incoming!
-#  Please come back later.
-#  Nothing to see here!
+#  This work is pre-peer-review
+## The specification is nearing completion
+## The analysis needs work
+##  Read at your own time-risk!
