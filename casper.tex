@@ -104,15 +104,13 @@ Every validation includes a timestamp of the time at which the validator claims 
 The safe version is appropriate for asynchronous networks and hence will make it theoretically possible for validators to collect all of their fees even if they are unable to coordinate timeouts. If they are following the safe consensus strategy, a validator must get $p\%$ of the other validators to approve their proposal, if they do not have a valid block from the previous validator in the round-robin. To be safe against byzantine faults in an asynchronous network, it is recommended that $p$ be at least two thirds. Safe mode sacrifices availability of services during network partitions or a large number of byzantine faults in return for the saftey of validator revenues, and is only important when validators cannot coordinate timeouts. Therefore we strongly recommend against ever using safe mode.
 
 
-%To what extent can we make the fork-choice rule more trivial?
 \subsection{Fork-choice Rule}
 
-Casper's fork-choice rule is relatively simple, but we must define a couple of terms to specify it: 
+If a client does not know the current set of bonded validators, then the fork-choice rule returns an exception. In this case, the client must learn and authenticate the validator set out-of-band. Otherwise, the client will be able to make a fork-choice. We will define a couple of terms before we specify Casper's fork-choice rule: 
 
 A \emph{blockchain ping} is a message with a timestamp, a recent block hash and a small amount of proof-of-work or a transaction fee from an account with a balance. Note that proposers may or may not earn a small amount of fees or issuance for including pings in blocks. The purpose of this ping is so that a client can have an interaction with the blockchain in order to be convinced that blocks that appear to be new truly are new, and they are therefore not being subjected to a replay attack.
 
-A \emph{ghost group} is a set of forks that agree on the most recent finalized application state. The fork choice rule is an interactive protocol: ping every ghost group, wait a short amount of time, and then from the ghost group which gave the ping the most validations pick the fork with the most validation signatures in its ghost table. Additionally, we have the restriction that the fork-choice rule will never pick a fork that didn't include a block that the client making the fork-choice knows received more than the finality threshold number of signatures from then-bonded validators.
-
+A \emph{ghost group} is a set of forks that agree on the most recent finalized application state. The fork choice rule is an interactive protocol: ping every ghost group, wait a short amount of time, and then from the ghost group which gave the ping the most validations pick the fork with the most validation signatures in its ghost table. Additionally, we have the restriction that the fork-choice rule will never pick a fork that hasn't achieved finality on a block that the client making the fork-choice has observed has already observed to be be finalized. 
 
 \subsection{Further modifications}
 
