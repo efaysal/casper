@@ -112,9 +112,9 @@ A \emph{blockchain ping} is a message with a timestamp, a recent block hash and 
 
 A \emph{ghost group} is a set of forks that agree on the most recent finalized application state. The fork choice rule is an interactive protocol: ping every ghost group, wait a short amount of time, and then from the ghost group which gave the ping the most validations pick the fork with the most validation signatures in its ghost table. Additionally, we have the restriction that the fork-choice rule will never pick a fork that hasn't achieved finality on a block that the client making the fork-choice has observed has already observed to be be finalized. 
 
-\subsection{Further modifications}
+\subsection{Suggested modifications}
 
-There are two modifications that should be made to Casper before it is truly a practical consensus system:
+We suggest the following two changes to Casper, which will make him a practical consensus system:
 
 Firstly, if there are two divergent forks with substantial validation power, and there is no evidence that there \emph{wasn't} a network split, we would like the consensus mechanism to be able to somehow strategically reroll the transactions that occured on both forks against the application state, in order to come to a \emph{compromise application state} rather than abandoning one fork to have the validators attempt to replay transactions from the abandoned fork in whichever order the validators are able, on the ``higher-scoring'' fork. 
 
