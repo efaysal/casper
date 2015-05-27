@@ -127,6 +127,10 @@ In the first analysis we treat Casper as a non-economic consensus algorithm and 
 
 \subsection{Traditional Consensus Analysis}
 
+%Ethan said I should make it clear that I'm using node-based intuitions of synchronicity/asynchronicity
+%I need to talk to Andrew Miller and Dominic Williams to get a better understanding of how to conduct this analysis
+%Or I can read literature - that's a good idea!
+
 When the network is synchronous, correct validators will be able to use timeouts to coordinate signing the same block at every height, as there is only one proposer who is able to propose at every ``validation period'' if blocks are being skipped, while the next proposer in the round-robin can immediately create and have his block validated. Byzantine nodes can lie about timestamps, or fail to include orphan blocks or validations in their blocks without being ejected by the protocol. As long as there are not too many Byzantine faults, the timestamps should still be reliable enough for the network to coordinate a minimum timeout length. When a large percentage of nodes are lying about timestamps, correct validators will not be able to verify that their timeouts are synchronized and must instead rely only on their internal clocks and on constant protocol-defined defaults.
 
 In a synchronous network without partitions, a correct quorum of >50\% of the bonded stake can ensure that the consensus is available and the transactions executed against the consensus state are never reverted. Note that clients cannot necessarily verify that these nodes that are are maintaining the consensus fork are correct, and would require more than 50\% of validations before considering a block final due to the fear of double-signing - but, indeed, a Byzantine quorum of 49\% cannot revert blocks created and validated by a correct quorum of 51\%. If the correct validators can synchronize their timeouts, a quorum of 49\% won't even be able to cause a block at a given height to be executed ahead of a block proposed by a correct node.
