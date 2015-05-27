@@ -141,6 +141,9 @@ In a network partition, validators on either side of the partition will create b
 
 We believe that Casper is very Byzantine fault tolerant when the network is synchronous and connected, and that it is available in the event of network partitions. Very notably, is able to give clients a precise indication of the minimum number of faults required to revert the execution of their transactions.
 
+%Outstanding issues:
+%What if an attacker bonds a lot and is faulty with a bit, in order to control more of the bonded stake?
+%Then they will have an easier time censoring txs, but they still cannot revert anything
 
 \subsection{Economic Analysis}
 
