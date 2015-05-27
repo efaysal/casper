@@ -2,8 +2,8 @@
 ## Read at your own time-risk!
 
 # To Do:
-### Fix security deposit size to target number of validators
-### Fix traditional consensus analysis
-### Add pretty diagrams
-### Add economic analysis
-### Add decentralization analysis?
+### Let the security deposit size target the number of validators
+### Improve traditional consensus/bft analysis
+### Improve economic analysis
+### Add pretty diagrams/illustrations
+### Add decentralization/recovery analysis (?)
