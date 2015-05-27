@@ -55,6 +55,13 @@ The by-block state transition function is typically taken to directly update the
 This represents an important but subtle conceptual change to our definition of blockchain-based consensus, because it makes it possible for us to consider consensus to be a function only of the order of transactions executed (or reverted) against the application state, rather than the order in which transactions appeared in the blockchain. Even though a blockchain uniquely determines the order of transaction execution against the application state, there can be many blockchains that give the same order and application state. This additional ``wiggle room'' makes it possible for us to consider GHOST as a blockchain-based consensus protocol that keeps track of a tree of blocks with its consensus manager. It also lets us see that it is possible for clients who never choose the same fork to nonetheless have consensus on the same application state. The other purpose of this definition is to separate the application state from the part of the consensus state that deals with managing the consensus itself, including the administration of incentive mechanisms, the managment of validators, perhaps among other things.
 
 
+%To-add
+%Minor:
+%Target number of validators by picking the deposit size
+%Pay a fee to top-up and to bond, so that there's no incentive to censor bonding
+%Critical:
+%Require a minimum number of validation signatures for a block to have its tx's executed OR only the one with the most validations is executed, to prevent a late-block-addition priority-attack. 
+
 \section{Specification}
 
 Blockchain-based consensus is a process of trial-and-error, where commitments to blocks are not irreversible commitments to the execution of the transactions of that particular block, but rather are somewhat blind attempts to come to consensus on the application state. Additionally, blockchains allow us to have a system that will be available to clients regardless of network asynchrony and partitions.
