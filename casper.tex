@@ -89,12 +89,16 @@ By referring to the ghost table, Casper can learn how well the validators are me
 
 Fees that are earned by Casper but not by the validators, including security deposits which are forfeit due to double-signing should be burned, distributed to the stake which isn't bonded, or sent to a trusted party (or DAO) who is believed to be building a public good; withholding fees or taking deposits from validators when appropriate is a public good.
 
-
+%We need to figure out a way to have variable deposit sizes
 \subsubsection{Security Deposit Management}
 
 In the current specification validators must remain bonded for a multiple of a fixed-length period of time. To simplify the specification, let's call this period six months. In the first week of every six months, bonders for the subsequent six months must submit a bonding request, called a \emph{bond transaction}, as well as have a bond of a particular minimum bond size on deposit with Casper. Alternatively, validators can supply \emph{unbond transactions} during this period, and during the \emph{following} six months they will not be eligible to earn fees or provide validations, but at the end of that period they will have their bond returned to them (unless of course it has been forfeit in the meantime). By allowing bonding for the next period to occur in only one week at the start of the previous period, clients can come online at \emph{almost} any time every six months to securely learn the set of validators who will be maintaining the consensus six months from then, if they already have knowledge of the then-current set of validators. Otherwise, they must rely on out-of-band means of authenticating the validator set. 
 
+It is theoretically possible for the number of validators to drop to such low levels that targetted attacks on validators are a concern, because validator profitability depends on the number of byzantine or crash faults and rational validators will unbond when they are chronically unprofitable. Therefore, Casper will decrease the minimum deposit size in when the number of valdiators reaches below a ``minimum'' threshold. Alterntively, the number of validators can be too large, leading to uncessarily costly network overhead and redundancy of validaton. Therefore, Casper will increase the minimum deposit size when the number of validators gets above a ``maximum'' threshold. 
+
 Casper revokes a validator's deposit (and their role in maintaining the consensus) if he learns that the validator produced validation signatures on two blocks at the same height. Additionally, Casper only allows a new set of validators to be introduced after the previous set of validators achieves finality on the new bonding and unbonding transactions. This requirement is important because it guarantees that validators will ``pass the torch'' without being able to subsequently make changes to the next validator set. Finally, if a validator does not have a single validation included in the ghost table, for the whole ghost depth, then they are unbonded (i.e. an unbond transaction is made on their behalf).
+
+
 
 
 %We need to consider removing the safe strategy
