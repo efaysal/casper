@@ -15,4 +15,4 @@
 
 ## Optional:
 * add pretty diagrams/illustrations
-* add Pay a fee to top-up and to bond, so that there's no incentive to censor bondingdecentralization/ mass-crash-fault recovery analysis
+* add decentralization/ mass-crash-fault recovery analysis
