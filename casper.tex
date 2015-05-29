@@ -15,7 +15,6 @@
 
 \begin{document}
 
-%Maybe put ccrg, ethereum logos on the title page?
 \maketitle
 
 \tableofcontents
@@ -55,11 +54,6 @@ The by-block state transition function is typically taken to directly update the
 This represents an important but subtle conceptual change to our definition of blockchain-based consensus, because it makes it possible for us to consider consensus to be a function only of the order of transactions executed (or reverted) against the application state, rather than the order in which transactions appeared in the blockchain. Even though a blockchain uniquely determines the order of transaction execution against the application state, there can be many blockchains that give the same order and application state. This additional ``wiggle room'' makes it possible for us to consider GHOST as a blockchain-based consensus protocol that keeps track of a tree of blocks with its consensus manager. It also lets us see that it is possible for clients who never choose the same fork to nonetheless have consensus on the same application state. The other purpose of this definition is to separate the application state from the part of the consensus state that deals with managing the consensus itself, including the administration of incentive mechanisms, the managment of validators, perhaps among other things.
 
 
-%To-add
-%Minor:
-%Target number of validators by picking the deposit size
-%Pay a fee to top-up and to bond, so that there's no incentive to censor bonding
-
 \section{Specification}
 
 Blockchain-based consensus is a process of trial-and-error, where commitments to blocks are not irreversible commitments to the execution of the transactions of that particular block, but rather are somewhat blind attempts to come to consensus on the application state. Additionally, blockchains allow us to have a system that will be available to clients regardless of network asynchrony and partitions.
@@ -89,7 +83,6 @@ By referring to the ghost table, Casper can learn how well the validators are me
 
 Fees that are earned by Casper but not by the validators, including security deposits which are forfeit due to double-signing should be burned, distributed to the stake which isn't bonded, or sent to a trusted party (or DAO) who is believed to be building a public good; withholding fees or taking deposits from validators when appropriate is a public good.
 
-%We need to figure out a way to have variable deposit sizes
 \subsubsection{Security Deposit Management}
 
 In the current specification validators must remain bonded for a multiple of a fixed-length period of time. To simplify the specification, let's call this period six months. In the first week of every six months, bonders for the subsequent six months must submit a bonding request, called a \emph{bond transaction}, as well as have a bond of a particular minimum bond size on deposit with Casper. Alternatively, validators can supply \emph{unbond transactions} during this period, and during the \emph{following} six months they will not be eligible to earn fees or provide validations, but at the end of that period they will have their bond returned to them (unless of course it has been forfeit in the meantime). By allowing bonding for the next period to occur in only one week at the start of the previous period, clients can come online at \emph{almost} any time every six months to securely learn the set of validators who will be maintaining the consensus six months from then, if they already have knowledge of the then-current set of validators. Otherwise, they must rely on out-of-band means of authenticating the validator set. 
@@ -99,11 +92,6 @@ It is theoretically possible for the number of validators to drop to such low le
 Casper revokes a validator's deposit (and their role in maintaining the consensus) if he learns that the validator produced validation signatures on two blocks at the same height. Additionally, Casper only allows a new set of validators to be introduced after the previous set of validators achieves finality on the new bonding and unbonding transactions. This requirement is important because it guarantees that validators will ``pass the torch'' without being able to subsequently make changes to the next validator set. Finally, if a validator does not have a single validation included in the ghost table, for the whole ghost depth, then they are unbonded (i.e. an unbond transaction is made on their behalf).
 
 
-
-
-%We need to consider removing the safe strategy
-%or giving it a great deal more thought
-%as of now, the analysis and motivation are very weak
 \subsection{Consensus Strategy}
 
 Casper's state transition function pays validators more fees when they chain blocks in a Casper-assigned round-robin order. Casper must still suggests how validators are to decide when to publish and validate block proposals, given that there might be crash-faults that prevent them from proposing blocks in the prescribed order. Accordingly, Casper suggests using one of two consensus strategies: a faster, synchronous, timeout-based strategy or a safer strategy that involves getting permission from a sample of a proportion $p$ of the validators in order to skip allegedly crash-faulty proposers. We strongly recommend sticking to the first strategy. Choosing the second strategy favours the safety of the validators' revenues rather than the prompt availability of a proposal. The safe strategy might not be possible in the event of partitions, if $p$ is large enough or the partition small enough, while the fast strategy will always produce blocks.
@@ -138,7 +126,7 @@ In the first analysis we treat Casper as a non-economic consensus algorithm and 
 
 %Ethan said I should make it clear that I'm using node-based intuitions of synchronicity/asynchronicity
 %I need to talk to Andrew Miller and Dominic Williams to get a better understanding of how to conduct this analysis
-%Or I can read literature - that's a good idea!
+%Or I can read literature
 
 When the network is synchronous, correct validators will be able to use timeouts to coordinate signing the same block at every height. The next proposer in the round-robin can immediately create a block on the current proposer's block, and validators can immediately validate this block if they already have its parent, so timeouts are not required in this case. Additionally, there is only one proposer who is able to propose at every ``validation period'' when blocks are being skipped. 
 
@@ -152,9 +140,6 @@ In a network partition, validators on either side of the partition will create b
 
 We believe that Casper is very Byzantine fault tolerant when the network is synchronous and connected, and that it is available in the event of network partitions. Very notably, is able to give clients a precise indication of the minimum number of faults required to revert the execution of their transactions.
 
-%Outstanding issues:
-%What if an attacker bonds a lot and is faulty with a bit, in order to control more of the bonded stake?
-%Then they will have an easier time censoring txs, but they still cannot revert anything
 
 \subsection{Economic Analysis}
 
